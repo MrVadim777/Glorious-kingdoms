@@ -1,0 +1,49 @@
+# === Binaries ===
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.obj
+
+# === Visual Studio ===
+.vs/
+*.suo
+*.user
+*.vcxproj
+*.vcxproj.*
+*.VC.db
+*.VC.opendb
+*.ncb
+*.opensdf
+*.sdf
+
+# === CMake build ===
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+build/
+out/
+
+# === Output folders ===
+Debug/
+Release/
+x64/
+x64-Debug/
+x64-Release/
+
+# === Generated Solutions ===
+*.sln
+
+# === Others ===
+*.log
+*.tmp
+*.tlog
+*.cache
+*.dir
+
+# === OS cruft ===
+.DS_Store
+Thumbs.db
+desktop.ini
