@@ -9,35 +9,8 @@ Engine::Engine()
 }
 
 void Engine::initialization() {
-    player = gameContext.ecs.entityManager.create();
-
-    gameContext.ecs.positionStorage.add(player, {700.f, 500.f});
-    gameContext.ecs.directionStorage.add(player, {Horizontal::NONE, Vertical::NONE});
-    gameContext.ecs.speedStorage.add(player, {50.f});
-
-    sf::RectangleShape shape(sf::Vector2f(50.f, 50.f));
-    shape.setFillColor(sf::Color::Green);
-    gameContext.ecs.renderableStorage.add(player, {shape});
-
-    gameContext.ecs.entityManager.addComponentBit(player, getComponentIndex<PositionComponent>());
-    gameContext.ecs.entityManager.addComponentBit(player, getComponentIndex<DirectionComponent>());
-    gameContext.ecs.entityManager.addComponentBit(player, getComponentIndex<SpeedComponent>());
-    gameContext.ecs.entityManager.addComponentBit(player, getComponentIndex<RenderableComponent>());
-
-    entity = gameContext.ecs.entityManager.create();
-
-    gameContext.ecs.positionStorage.add(entity, {1200.f, 500.f});
-    gameContext.ecs.directionStorage.add(entity, {Horizontal::NONE, Vertical::NONE});
-    gameContext.ecs.speedStorage.add(entity, {50.f});
-
-    sf::RectangleShape shape2(sf::Vector2f(50.f, 50.f));
-    shape2.setFillColor(sf::Color::Blue);
-    gameContext.ecs.renderableStorage.add(entity, {shape2});
-
-    gameContext.ecs.entityManager.addComponentBit(entity, getComponentIndex<PositionComponent>());
-    gameContext.ecs.entityManager.addComponentBit(entity, getComponentIndex<DirectionComponent>());
-    gameContext.ecs.entityManager.addComponentBit(entity, getComponentIndex<SpeedComponent>());
-    gameContext.ecs.entityManager.addComponentBit(entity, getComponentIndex<RenderableComponent>());
+    player = EntityFactory::createPlayer(gameContext, {700.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {50.f});
+    entity = EntityFactory::createNpc(gameContext, {1200.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {50.f});
 
     ImGui::SFML::Init(gameContext.gfx.window);
 }

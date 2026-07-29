@@ -12,7 +12,7 @@
 
 #include "DirectionComponent.h"
 
-#include "EntityDebugVM.h"
+#include "DebugEntityInfo.h"
 
 class DebugUIManager {
   public:
@@ -47,7 +47,7 @@ class DebugUIManager {
         ImGui::End();
     }
 
-    void drawEntities(const std::vector<EntityDebugVM>& vms, sf::RenderWindow& window) {
+    void drawEntities(const std::vector<DebugEntityInfo>& vms, sf::RenderWindow& window) {
 
         for (const auto& vm : vms) {
             // world -> screen

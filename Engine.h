@@ -7,6 +7,8 @@
 #include "ComponentStorage.h"
 #include "ComponentTypeIndex.h"
 
+#include "EntityFactory.h"
+
 #include "DebugSystem.h"
 #include "InputSystem.h"
 #include "MovementSystem.h"

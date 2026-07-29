@@ -27,7 +27,7 @@ class SpatialGridManager {
     float                                                          cellSize;
 
   public:
-    SpatialGridManager(float cellSize = 64.f) : cellSize(cellSize) {
+    SpatialGridManager(float cellSize) : cellSize(cellSize) {
     }
 
     CellCoord toCellCoord(float x, float y) const {

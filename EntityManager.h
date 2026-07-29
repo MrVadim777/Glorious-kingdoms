@@ -24,7 +24,7 @@ class EntityManager {
         return masks.at(e);
     }
 
-    const std::unordered_map < EntityId, std::bitset<MAX_COMPONENTS>>& getMasks() {
+    const std::unordered_map < EntityId, std::bitset<MAX_COMPONENTS>>& getMasks() const {
         return masks;
     }
 

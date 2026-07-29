@@ -3,7 +3,7 @@
 #include "EntityId.h"
 #include "DirectionComponent.h"
 
-struct EntityDebugVM {
+struct DebugEntityInfo {
     EntityId   id;
     float      x, y;
     Horizontal h;

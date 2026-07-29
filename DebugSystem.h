@@ -1,8 +1,8 @@
 #pragma once
 
 #include <bitset>
-#include <vector>
 #include <iostream>
+#include <vector>
 
 #include "GameContext.h"
 
@@ -16,7 +16,7 @@
 #include "ComponentStorage.h"
 #include "ComponentTypeIndex.h"
 
-#include "EntityDebugVM.h"
+#include "DebugEntityInfo.h"
 
 class DebugSystem {
   private:
@@ -32,15 +32,14 @@ class DebugSystem {
 
     DebugEventHandler debugEventHandler;
 
-    std::vector<EntityDebugVM> visibleEntitiesInfo;
+    std::vector<DebugEntityInfo> visibleEntitiesInfo;
 
     bool isDebugMenu  = true;
     bool isGamePaused = false;
 
   public:
     DebugSystem(GameContext& gameContext)
-        : gameContext(gameContext), debugGridRenderSystem(gameContext.world.spatialGridManager),
-          debugEventHandler(gameContext) {
+        : gameContext(gameContext), debugGridRenderSystem(gameContext), debugEventHandler(gameContext) {
 
         required.set(getComponentIndex<PositionComponent>());
         required.set(getComponentIndex<DirectionComponent>());
@@ -71,7 +70,9 @@ class DebugSystem {
         if (isDebugMenu == true) {
             bool drawAll = debugEntityInspector.isDrawAllEntityInfo();
 
-            debugGridRenderSystem.render(gameContext.gfx.window);
+            if (debugUIManager.getDrawGrid()) {
+                debugGridRenderSystem.render(gameContext.gfx.window);
+            }
 
             debugPerformanceMonitor.updateFPS(deltaTime);
 
