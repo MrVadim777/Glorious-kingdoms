@@ -14,6 +14,8 @@
 #include "MovementSystem.h"
 #include "RenderSystem.h"
 #include "SpatialPartitionSystem.h"
+#include "LocationBoundsSystem.h"
+#include "CameraSystem.h"
 
 class Engine {
   private:
@@ -24,6 +26,8 @@ class Engine {
     MovementSystem         movementSystem;
     RenderSystem           renderSystem;
     SpatialPartitionSystem spatialPartitionSystem;
+    LocationBoundsSystem   locationBoundsSystem;
+    CameraSystem           cameraSystem;
 
     sf::Event                         event;
     sf::Clock                         clock;

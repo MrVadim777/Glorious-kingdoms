@@ -76,14 +76,14 @@ class DebugSystem {
 
             debugPerformanceMonitor.updateFPS(deltaTime);
 
-            debugUIManager.drawMouseInfoAtCursor(gameContext.gfx.window);
+            debugUIManager.drawMouseInfoAtCursor(gameContext.gfx.window, gameContext.gfx.worldView);
 
             debugUIManager.drawMainDebugWindow(
                 gameContext.ecs.entityManager, debugPerformanceMonitor, isGamePaused, drawAll);
 
             debugEntityInspector.setDrawAllEntityInfo(drawAll);
 
-            debugUIManager.drawEntities(visibleEntitiesInfo, gameContext.gfx.window);
+            debugUIManager.drawEntities(visibleEntitiesInfo, gameContext.gfx.window, gameContext.gfx.worldView);
 
             if (debugUIManager.isMainDebugMenuDraw == true) {
                 DebugConsole::render();

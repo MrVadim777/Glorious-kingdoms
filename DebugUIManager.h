@@ -47,11 +47,11 @@ class DebugUIManager {
         ImGui::End();
     }
 
-    void drawEntities(const std::vector<DebugEntityInfo>& vms, sf::RenderWindow& window) {
+    void drawEntities(const std::vector<DebugEntityInfo>& vms, sf::RenderWindow& window, const sf::View& worldView) {
 
         for (const auto& vm : vms) {
             // world -> screen
-            sf::Vector2i pixel = window.mapCoordsToPixel(sf::Vector2f(vm.x, vm.y));
+            sf::Vector2i pixel = window.mapCoordsToPixel(sf::Vector2f(vm.x, vm.y), worldView);
             ImVec2       screenPos(static_cast<float>(pixel.x) + 60.f, static_cast<float>(pixel.y));
 
             std::string windowName = "Entity " + std::to_string(vm.id);
@@ -70,21 +70,23 @@ class DebugUIManager {
         }
     }
 
-    void drawMouseInfoAtCursor(sf::RenderWindow& window) {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        ImVec2       imguiPos = ImVec2((float)mousePos.x + 12.f, (float)mousePos.y + 12.f);
+    void drawMouseInfoAtCursor(sf::RenderWindow& window, const sf::View& worldView) {
+        sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
+        sf::Vector2f mouseWorld = window.mapPixelToCoords(mousePixel, worldView);
+
+        ImVec2 imguiPos = ImVec2(static_cast<float>(mousePixel.x) + 12.f, static_cast<float>(mousePixel.y) + 12.f);
 
         ImGui::SetNextWindowPos(imguiPos, ImGuiCond_Always);
-        ImGui::SetNextWindowBgAlpha(0.6f); // прозрачность фона
+        ImGui::SetNextWindowBgAlpha(0.6f);
+
         ImGui::Begin("Mouse Tooltip",
                      nullptr,
                      ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize |
                          ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings |
                          ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav);
 
-        ImGui::Text("x: %d", mousePos.x);
-        ImGui::SameLine();
-        ImGui::Text("y: %d", mousePos.y);
+        ImGui::Text("screen: x=%d, y=%d", mousePixel.x, mousePixel.y);
+        ImGui::Text("world:  x=%.1f, y=%.1f", mouseWorld.x, mouseWorld.y);
 
         ImGui::End();
     }

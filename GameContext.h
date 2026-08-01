@@ -62,6 +62,7 @@ struct WorldServices {
 
 struct Gfx {
     sf::RenderWindow window;
+    sf::View         worldView;
 };
 
 struct GameContext {
