@@ -70,6 +70,10 @@ class DebugSystem {
         if (isDebugMenu == true) {
             bool drawAll = debugEntityInspector.isDrawAllEntityInfo();
 
+            if (debugUIManager.getDrawPerceptionCells()) {
+                debugGridRenderSystem.renderPerceptionCells(gameContext.gfx.window);
+            }
+
             if (debugUIManager.getDrawGrid()) {
                 debugGridRenderSystem.render(gameContext.gfx.window);
             }
@@ -93,38 +97,55 @@ class DebugSystem {
 
   private:
     void collectDTOForVisibleEntities() {
-
         visibleEntitiesInfo.clear();
 
         if (debugEntityInspector.isDrawAllEntityInfo()) {
             for (const auto& [entity, mask] : gameContext.ecs.entityManager.getMasks()) {
-
                 if ((mask & required) != required)
                     continue;
 
-                const auto* p = gameContext.ecs.positionStorage.get(entity);
-                const auto* d = gameContext.ecs.directionStorage.get(entity);
-                const auto* s = gameContext.ecs.speedStorage.get(entity);
+                DebugEntityInfo info;
 
-                if (!(p && d && s))
-                    continue;
-
-                visibleEntitiesInfo.push_back({entity, p->x, p->y, d->horizontal, d->vertical, s->speed});
+                if (collectEntityInfo(entity, info)) {
+                    visibleEntitiesInfo.push_back(info);
+                }
             }
         } else {
             const auto& picked = debugEntityInspector.getVisibleEntities();
 
             for (EntityId entity : picked) {
+                DebugEntityInfo info;
 
-                const auto* p = gameContext.ecs.positionStorage.get(entity);
-                const auto* d = gameContext.ecs.directionStorage.get(entity);
-                const auto* s = gameContext.ecs.speedStorage.get(entity);
-
-                if (!(p && d && s))
-                    continue;
-
-                visibleEntitiesInfo.push_back({entity, p->x, p->y, d->horizontal, d->vertical, s->speed});
+                if (collectEntityInfo(entity, info)) {
+                    visibleEntitiesInfo.push_back(info);
+                }
             }
         }
+    }
+
+    bool collectEntityInfo(EntityId entity, DebugEntityInfo& info) {
+        const auto* p = gameContext.ecs.positionStorage.get(entity);
+        const auto* d = gameContext.ecs.directionStorage.get(entity);
+        const auto* s = gameContext.ecs.speedStorage.get(entity);
+
+        if (!(p && d && s))
+            return false;
+
+        info.id    = entity;
+        info.x     = p->x;
+        info.y     = p->y;
+        info.h     = d->horizontal;
+        info.v     = d->vertical;
+        info.speed = s->speed;
+
+        const auto* perception = gameContext.ecs.perceptionStorage.get(entity);
+
+        if (perception != nullptr) {
+            info.hasPerception    = true;
+            info.perceptionRadius = perception->radius;
+            info.nearbyEntities   = perception->nearbyEntities;
+        }
+
+        return true;
     }
 };

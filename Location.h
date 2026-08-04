@@ -8,8 +8,8 @@ struct Coord {
 class Location {
     Coord coord = {0, 0};
 
-    int widthInCells  = 100;
-    int heightInCells = 100;
+    int widthInCells  = 20;
+    int heightInCells = 20;
 
     const float cellSize = 64.f;
 

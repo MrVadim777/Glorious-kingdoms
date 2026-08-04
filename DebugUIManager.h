@@ -19,7 +19,8 @@ class DebugUIManager {
     bool isMainDebugMenuDraw  = false;
     bool isDrawCollisionBoxes = false;
     bool isDrawCameraBounds   = false;
-    bool isDrawGrid           = false;
+    bool isDrawGrid            = true;
+    bool isDrawPerceptionCells = true;
 
     void drawMainDebugWindow(const EntityManager&           entityManager,
                              const DebugPerformanceMonitor& debugPerformanceMonitor,
@@ -66,6 +67,17 @@ class DebugUIManager {
             ImGui::Text("Direction: H=%s, V=%s", directionToString(vm.h), directionToString(vm.v));
             ImGui::Text("Speed: %.2f", vm.speed);
 
+            if (vm.hasPerception) {
+                ImGui::Separator();
+
+                ImGui::Text("Perception radius: %d", vm.perceptionRadius);
+                ImGui::Text("Detected entities: %zu", vm.nearbyEntities.size());
+
+                for (EntityId detected : vm.nearbyEntities) {
+                    ImGui::BulletText("Entity %zu", static_cast<size_t>(detected));
+                }
+            }
+
             ImGui::End();
         }
     }
@@ -101,6 +113,10 @@ class DebugUIManager {
 
     bool getDrawGrid() const {
         return isDrawGrid;
+    }
+
+    bool getDrawPerceptionCells() const {
+        return isDrawPerceptionCells;
     }
 
   private:
@@ -172,6 +188,8 @@ class DebugUIManager {
             ImGui::Checkbox("Show Camera Bounds", &isDrawCameraBounds);
             ImGui::SameLine();
             ImGui::Checkbox("Show Grid", &isDrawGrid);
+            ImGui::SameLine();
+            ImGui::Checkbox("Show Perception Cells", &isDrawPerceptionCells);
             ImGui::EndTabItem();
         }
     }

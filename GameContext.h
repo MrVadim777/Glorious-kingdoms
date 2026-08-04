@@ -12,6 +12,7 @@
 #include "RenderableComponent.h"
 #include "SpeedComponent.h"
 #include "CellIndexComponent.h"
+#include "PerceptionComponent.h"
 
 struct ECSRegistry {
     EntityManager entityManager;
@@ -21,6 +22,7 @@ struct ECSRegistry {
     ComponentStorage<SpeedComponent>      speedStorage;
     ComponentStorage<RenderableComponent> renderableStorage;
     ComponentStorage<CellIndexComponent>  cellIndexStorage;
+    ComponentStorage<PerceptionComponent> perceptionStorage;
 
     EntityId createEntity() {
         return entityManager.create();
@@ -49,6 +51,11 @@ struct ECSRegistry {
     void addCellIndex(EntityId entityId, const CellIndexComponent& cellIndex) {
         cellIndexStorage.add(entityId, cellIndex);
         entityManager.addComponentBit(entityId, getComponentIndex<CellIndexComponent>());
+    }
+
+    void addPerception(EntityId entityId, const PerceptionComponent& perception) {
+        perceptionStorage.add(entityId, perception);
+        entityManager.addComponentBit(entityId, getComponentIndex<PerceptionComponent>());
     }
 };
 

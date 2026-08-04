@@ -16,6 +16,7 @@
 #include "SpatialPartitionSystem.h"
 #include "LocationBoundsSystem.h"
 #include "CameraSystem.h"
+#include "PerceptionSystem.h"
 
 class Engine {
   private:
@@ -28,6 +29,7 @@ class Engine {
     SpatialPartitionSystem spatialPartitionSystem;
     LocationBoundsSystem   locationBoundsSystem;
     CameraSystem           cameraSystem;
+    PerceptionSystem       perceptionSystem;
 
     sf::Event                         event;
     sf::Clock                         clock;

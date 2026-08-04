@@ -3,7 +3,8 @@
 Engine::Engine()
     : inputSystem(gameContext), movementSystem(gameContext),
       renderSystem(gameContext), spatialPartitionSystem(gameContext), 
-      debugSystem(gameContext), locationBoundsSystem(gameContext), cameraSystem(gameContext){
+      debugSystem(gameContext), locationBoundsSystem(gameContext), 
+      cameraSystem(gameContext), perceptionSystem(gameContext){
 
     gameContext.gfx.window.create(sf::VideoMode(1920, 1080), "ECS Demo");
     gameContext.gfx.window.setFramerateLimit(120);
@@ -12,8 +13,8 @@ Engine::Engine()
 }
 
 void Engine::initialization() {
-    player = EntityFactory::createPlayer(gameContext, {700.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {300.f});
-    entity = EntityFactory::createNpc(gameContext, {1200.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {50.f});
+    player = EntityFactory::createPlayer(gameContext, {700.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {300.f}, {1});
+    entity = EntityFactory::createNpc(gameContext, {1200.f, 500.f}, {Horizontal::NONE, Vertical::NONE}, {50.f}, {1});
 
     ImGui::SFML::Init(gameContext.gfx.window);
 }
@@ -44,6 +45,7 @@ void Engine::system() {
     movementSystem.update(deltaTime);
     locationBoundsSystem.update();
     spatialPartitionSystem.update();
+    perceptionSystem.update();
     cameraSystem.update(player, deltaTime);
     debugSystem.update(deltaTime);
 }

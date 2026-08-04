@@ -3,10 +3,11 @@
 
 class EntityFactory {
   public:
-    static EntityId createPlayer(GameContext&       gameContext,
-                                 PositionComponent  position,
-                                 DirectionComponent direction,
-                                 SpeedComponent     speed) {
+    static EntityId createPlayer(GameContext&        gameContext,
+                                 PositionComponent   position,
+                                 DirectionComponent  direction,
+                                 SpeedComponent      speed,
+                                 PerceptionComponent perception) {
         
         sf::RectangleShape shape(sf::Vector2f(50.f, 50.f)); //Пока кастыль
         shape.setFillColor(sf::Color::Green);
@@ -18,14 +19,16 @@ class EntityFactory {
         gameContext.ecs.addDirection(entityId, direction);
         gameContext.ecs.addSpeed(entityId, speed);
         gameContext.ecs.addRenderable(entityId, {shape});
+        gameContext.ecs.addPerception(entityId, perception);
 
         return entityId;
     }
 
-    static EntityId createNpc(GameContext&       gameContext,
-                              PositionComponent  position,
-                              DirectionComponent direction,
-                              SpeedComponent     speed) {
+    static EntityId createNpc(GameContext&        gameContext,
+                              PositionComponent   position,
+                              DirectionComponent  direction,
+                              SpeedComponent      speed,
+                              PerceptionComponent perception) {
 
         sf::RectangleShape shape(sf::Vector2f(50.f, 50.f)); // Пока кастыль
         shape.setFillColor(sf::Color::Blue);
@@ -37,6 +40,7 @@ class EntityFactory {
         gameContext.ecs.addDirection(entityId, direction);
         gameContext.ecs.addSpeed(entityId, speed);
         gameContext.ecs.addRenderable(entityId, {shape});
+        gameContext.ecs.addPerception(entityId, perception);
 
         return entityId;
     }
